@@ -1,6 +1,6 @@
 ---
 name: cangjie-skill
-description: Distill a book into a coherent set of executable skills. Use when the user asks to "拆书" / "蒸馏一本书" / "把 XX 书做成 skill" / "turn a book into skills" — i.e. wants a book's frameworks, principles, and methodologies extracted into atomic, reusable Claude skills that an agent can invoke in real-world situations. NOT for simple summarization, book reviews, or role-playing as the author (that is nuwa-skill's job).
+description: Distill a book into a coherent set of executable skills OR a hands-on manual (Chinese-scanned-book specialist). Use when the user asks to "拆书" / "蒸馏一本书" / "把 XX 书做成 skill" / "turn a book into skills" — i.e. wants a book's frameworks, principles, and methodologies extracted into atomic, reusable Claude skills OR a Chinese-scanned-book-derived MARKDOWN HANDBOOK(用户最常需要的形态)。 内置 阶段 -1 快速体检 + RapidOCR 中文硬选型 + 产出路径分支决策(skill 手册 MD)。 2026-07 实战复盘已内化到流程中。 NOT for simple summarization, book reviews, or role-playing as the author (that is nuwa-skill's job).
 ---
 
 # cangjie-skill — 把一本书蒸馏成一组可执行 skills 的元 skill
@@ -70,9 +70,10 @@ pdftotext -f 1 -l 15 <path.pdf> | grep "目\s*录" -A 30  # 文本本目录
 |---|---|
 | 文本本 + 文字密度高 | 直接 Read/Grep/Read 文本 |
 | 文本本 + 只有目录页,后面全图 | **只 OCR 目录+标题章节**,跳过图谱区(常见于图谱/画集) |
-| 扫描本 + 中文 | pypdfium2 + RapidOCR(优先) 或 tesseract(chi_sim+chi_tra) |
+| ★**扫描本 + 中文 → 首选 RapidOCR**,这是 2026 年 7 月实测最佳链 | pypdfium2(scale=1.8~2.2) + `rapidocr_onnxruntime`(中文 95%+ 识别率,无云依赖) |
 | 扫描本 + 英文 | pdftoppm + tesseract(eng) |
-| markitdown(来自用户建议) | ⚠️ 默认不含 OCR!需要外接 Azure Doc Intelligence / LLM Vision.无云账号时改用 RapidOCR |
+| markitdown(来自用户建议) | ⚠️ 默认不含 OCR!需要外接 Azure Doc Intelligence / LLM Vision.无云账号时改用 RapidOCR. |
+| 其他 OCR | PaddleOCR 4.x(企业级复杂需求) / tesseract(遗留系统兼容性) |
 
 ### -1.3 文字密度采样决策(**最关键一步**)
 

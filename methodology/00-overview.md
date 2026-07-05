@@ -90,6 +90,7 @@
 |---|---|---|---|
 | `pdftotext <pdf> | head` 输出为空 | 以为"PDF 损坏" | 30 min 探索 PATH | `pdfinfo` 5 秒判断 Producer / 页数 |
 | 1 页 1 图古籍 OCR 全册 | 没读目录页,不知道哪些是图谱区 | 60% OCR 时间浪费在无用输出上 | **先 OCR 目录页 → 挑文字密集章节抽样** |
+| RapidOCR 写成 PaddleOCR 优先 | 按"中文 OCR = PaddleOCR"惯性思维 | 多 3-5 倍装包时间 + 无法单文件离线部署 | **中文扫描本 95% 场景 RapidOCR 已足够**,写死为首选 |
 | markitdown 推荐给用户 | 用户以为它自带 OCR | 失望后代反悔 | markitdown 不含 OCR,中文扫描本用 RapidOCR |
 | 大段 Write 后标题 `## ` 缺号 | 没用 git,没 grep 验 | 2+ 小时后期返工 | **每章改完 grep "^## "** |
 | 没问"skill 还是 md" | 默认走 skill 路径 | 用户要 md 则需要完全返工 | **阶段决策点提前到阶段 0 后立刻问** |
